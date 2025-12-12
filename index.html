@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html
+  class="__variable_10b8bd __variable_d52403 __variable_f498c6 __variable_8db913 antialiased dark:bg-neutral-950 system"
+>
+  <head>
+    <title>CMPN202 Journal</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <div
+      class="overflow-x-hidden grid min-h-dvh grid-cols-1 grid-rows-[1fr_1px_auto_1px_auto] justify-center [--gutter-width:2.5rem] md:-mx-4 md:grid-cols-[var(--gutter-width)_minmax(0,var(--breakpoint-2xl))_var(--gutter-width)] lg:mx-0"
+    >
+      <div
+        class="col-start-1 row-span-full row-start-1 hidden border-x border-x-(--pattern-fg) bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed [--pattern-fg:var(--color-black)]/5 md:block dark:[--pattern-fg:var(--color-white)]/10"
+      ></div>
+      <div
+        class="grid gap-24 pb-24 text-gray-950 sm:gap-40 md:pb-40 dark:text-white"
+      >
+        <div>
+          <div
+            class="flex h-16 items-center justify-between px-2 max-sm:px-4 border-b border-gray-950/5 dark:border-white/10 mb-20"
+          >
+            <div
+              class="font-mono text-xs font-medium tracking-widest text-gray-500 uppercase"
+            >
+              CMPN202 • Undergraduate Level 5
+            </div>
+            <div>
+              <img
+                src="https://www.roehampton.ac.uk/Static/images/roehampton-logo-trans.svg"
+                alt="University of Roehampton"
+                class="h-10 mr-5 w-auto dark:invert dark:brightness-0 dark:sepia-0 dark:grayscale-0 dark:contrast-200"
+              />
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            class="flex h-16 items-end px-2 font-mono text-xs/6 whitespace-pre text-black/20 max-sm:px-4 sm:h-24 dark:text-white/25"
+          ></div>
+          <div class="h-[100px]"></div>
+          <div
+            class="relative before:absolute before:top-0 before:h-px before:w-[200vw] before:bg-gray-950/5 dark:before:bg-white/10 before:-left-[100vw] after:absolute after:bottom-0 after:h-px after:w-[200vw] after:bg-gray-950/5 dark:after:bg-white/10 after:-left-[100vw]"
+          >
+            <div class="px-2 max-sm:px-4">
+              <h1
+                class="mt-2 text-4xl tracking-tighter text-balance max-lg:font-medium sm:text-5xl lg:text-7xl"
+              >
+                Operating Systems Technical Journal
+              </h1>
+              <div class="mt-4">
+                <div class="flex items-center gap-4">
+                  <div>
+                    <p class="text-2xl text-gray-900 dark:text-white">
+                      Student & Author Anuj Baral
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="mt-20 px-2 max-sm:px-4 border-t border-gray-950/5 dark:border-white/10 pt-10"
+          >
+            <h2
+              class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"
+            >
+              Weekly Progress Log
+            </h2>
+            <p class="mt-2 text-gray-500">
+              Documenting the 7-week journey of building a secure Linux
+              infrastructure.
+            </p>
+          </div>
+
+          <div
+            id="journal-container"
+            class="mt-8 grid grid-cols-1 lg:grid-cols-[24rem_2.5rem_minmax(0,1fr)]"
+          >
+            <div
+              class="col-span-3 py-10 text-center text-gray-500 animate-pulse"
+            >
+              Loading journal entries...
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row-span-full row-start-1 hidden border-x border-x-(--pattern-fg) bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed [--pattern-fg:var(--color-black)]/5 md:col-start-3 md:block dark:[--pattern-fg:var(--color-white)]/10"
+      ></div>
+    </div>
+
+    <script>
+      const TOTAL_WEEKS = 7;
+      const CONTAINER = document.getElementById("journal-container");
+      function parseFrontmatter(markdown) {
+        const result = {
+          title: "Untitled",
+          description: "No description provided.",
+          date: "TBD",
+        };
+        const match = markdown.match(/^---\s*[\r\n]+([\s\S]*?)[\r\n]+---/);
+
+        if (match && match[1]) {
+          const lines = match[1].split("\n");
+          lines.forEach((line) => {
+            const colonIndex = line.indexOf(":");
+            if (colonIndex > 0) {
+              const key = line.slice(0, colonIndex).trim();
+              let value = line.slice(colonIndex + 1).trim();
+              value = value.replace(/^["'](.*)["']$/, "$1");
+              if (key && value) result[key] = value;
+            }
+          });
+        }
+        return result;
+      }
+
+      function createActiveCard(weekNum, meta) {
+        return `
+                <div class="col-span-3 grid grid-cols-subgrid divide-x divide-gray-950/5 dark:divide-white/10 relative before:absolute before:top-0 before:h-px before:w-[200vw] before:bg-gray-950/5 dark:before:bg-white/10 before:-left-[100vw] after:absolute after:bottom-0 after:h-px after:w-[200vw] after:bg-gray-950/5 dark:after:bg-white/10 after:-left-[100vw]">
+                    <div class="px-2 py-8 font-mono text-sm/6 font-medium tracking-widest text-gray-500 uppercase max-lg:hidden">
+                        ${meta.date || "Week " + weekNum}
+                    </div>
+                    <div class="max-lg:hidden"></div>
+                    <div class="px-2 py-8">
+                        <a href="view.html?page=week${weekNum}" class="group block max-w-(--container-2xl)">
+                            <div class="mb-4 font-mono text-sm/6 font-medium tracking-widest text-gray-500 uppercase lg:hidden">
+                                Week ${weekNum}
+                            </div>
+                            <div class="text-xl font-semibold group-hover:text-sky-500 transition-colors">
+                                ${meta.title}
+                            </div>
+                            <div class="prose prose-blog mt-4 line-clamp-3 leading-7 text-gray-600 dark:text-gray-400">
+                                ${meta.description}
+                            </div>
+                            <div class="mt-4 inline-flex items-center text-sm font-semibold text-sky-500 group-hover:text-sky-400">
+                                Read Entry 
+                                <svg class="ml-2 size-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
+                            </div>
+                        </a>
+                    </div>
+                </div>`;
+      }
+
+      function createPendingCard(weekNum) {
+        return `
+                <div class="col-span-3 grid grid-cols-subgrid divide-x divide-gray-950/5 dark:divide-white/10 relative after:absolute after:bottom-0 after:h-px after:w-[200vw] after:bg-gray-950/5 dark:after:bg-white/10 after:-left-[100vw]">
+                    <div class="px-2 py-8 font-mono text-sm/6 font-medium tracking-widest text-gray-500 uppercase max-lg:hidden opacity-50">
+                        Week ${weekNum}
+                    </div>
+                    <div class="max-lg:hidden"></div>
+                    <div class="px-2 py-8 opacity-50">
+                        <div class="mb-4 font-mono text-sm/6 font-medium tracking-widest text-gray-500 uppercase lg:hidden">
+                            Week ${weekNum}
+                        </div>
+                        <div class="text-xl font-semibold text-gray-500">
+                            Status: Pending
+                        </div>
+                        <div class="mt-2 text-sm text-gray-500 italic">
+                            This journal entry has not been published yet.
+                        </div>
+                    </div>
+                </div>`;
+      }
+
+      async function loadJournalEntries() {
+        CONTAINER.innerHTML = "";
+
+        for (let i = 1; i <= TOTAL_WEEKS; i++) {
+          try {
+            const response = await fetch(`journal/week${i}.md`);
+
+            if (response.ok) {
+              const text = await response.text();
+              const meta = parseFrontmatter(text);
+              CONTAINER.innerHTML += createActiveCard(i, meta);
+            } else {
+              CONTAINER.innerHTML += createPendingCard(i);
+            }
+          } catch (error) {
+            console.error(`Error loading week ${i}`, error);
+            CONTAINER.innerHTML += createPendingCard(i);
+          }
+        }
+      }
+      loadJournalEntries();
+    </script>
+  </body>
+</html>
