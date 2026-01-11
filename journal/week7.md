@@ -80,7 +80,7 @@ sudo rkhunter --propupd
 ```
 
 ![Figure 3: Installing System Accounting Trackers.](images/week7/trackers.png)
-![Figure 4: Installing  Malware Scanner .](images/week7/hunter.png)
+![Figure 4: Installing  Malware Scanner .](images/week7/Hunter.png)
 
 
 ### 4.2 Shell & Session Hardening

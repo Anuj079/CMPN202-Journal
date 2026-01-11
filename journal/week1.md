@@ -120,7 +120,7 @@ I successfully logged into the system using the `vboxuser` credentials. The prom
 **Evidence Analysis:**
 The login screen confirms the system is running **Linux Kernel 6.8.0-90-generic**. This modern kernel is crucial for our future work, as it supports **eBPF** (Extended Berkeley Packet Filter), a technology we may utilize for advanced security tracing and observability in Week 6. The `System load: 0.03` metric further validates the efficiency of the headless configuration; without a GUI, the system is consuming negligible resources at idle.
 
-![Figure 10: Comprehensive System Verification using 'uname', 'lsb_release', 'free', and 'ip addr'.](images/week1/system_Verification_&_evidence.png)
+![Figure 10: Comprehensive System Verification using 'uname', 'lsb_release', 'free', and 'ip addr'.](images/week1/system_verification_&_evidence.png)
 
 The screenshot above (Figure 10) provides definitive proof of the system's baseline configuration:
 
